@@ -1,34 +1,28 @@
-<html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Contacts</title>
+    <title>Contacts</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            color: #0f0;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 20px;
         }
         .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
         }
-        h1 {
-            text-align: center;
-            color: #333;
+        .ascii-art {
+            font-size: 0.8em;
+            line-height: 0.9em;
         }
         .contact-list {
             list-style-type: none;
             padding: 0;
+            margin-top: 20px;
         }
         .contact-list li {
             margin: 10px 0;
@@ -37,17 +31,83 @@
         .contact-list span {
             font-weight: bold;
         }
+        .hidden {
+            display: none;
+        }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="container">
-        <h1>Family Contacts</h1>
-        <ul class="contact-list">
-            <li><span>Vadim:</span> +972-528349195</li>
-            <li><span>Anastasiia:</span> +972-546955112</li>
-            <li><span>Nir:</span> +972-54570-1135</li>
-            <li><span>Elia:</span> +972-587713444</li>
+        <div class="g-recaptcha" data-sitekey="6LevUPkpAAAAAMbG_S-cm33QvA96ZjqtO16E2Abb" data-callback="onRecaptchaSuccess"></div>
+        <ul class="contact-list hidden" id="contactList">
+            <li>
+                <div class="ascii-art">
+                    <pre>
+\ \    / /
+ \ \  / / 
+  \ \/ /  
+   \  /   
+    \/    
+                    </pre>
+                </div>
+                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTUyODM0OTE5NQ=="></span>
+            </li>
+            <li>
+                <div class="ascii-art">
+                    <pre>
+     _    
+    / \   
+   / _ \  
+  / ___ \ 
+ /_/   \_\
+                    </pre>
+                </div>
+                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTU0Njk1NTExMg=="></span>
+            </li>
+            <li>
+                <div class="ascii-art">
+                    <pre>
+ ______ 
+|  ____|
+| |__   
+|  __|  
+| |____ 
+|______|
+                    </pre>
+                </div>
+                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTU0NTcwLTExMzU="></span>
+            </li>
+            <li>
+                <div class="ascii-art">
+                    <pre>
+ _____ 
+| ____|
+| |__  
+|___ \ 
+ ___) |
+|____/ 
+                    </pre>
+                </div>
+                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTU4NzcxMzQ0NA=="></span>
+            </li>
         </ul>
     </div>
+    <script>
+        // Function to decode base64 encoded strings
+        function decodeBase64(encodedStr) {
+            return decodeURIComponent(atob(encodedStr).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
+
+        // Function to handle reCAPTCHA success
+        function onRecaptchaSuccess() {
+            document.getElementById('contactList').classList.remove('hidden');
+            document.querySelectorAll('.phone').forEach(function(element) {
+                element.textContent = decodeBase64(element.getAttribute('data-encoded'));
+            });
+        }
+    </script>
 </body>
 </html>
