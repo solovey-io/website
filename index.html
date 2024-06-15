@@ -56,16 +56,16 @@
         <div id="recaptcha-container" class="g-recaptcha" data-sitekey="6LevUPkpAAAAAMbG_S-cm33QvA96ZjqtO16E2Abb" data-callback="onRecaptchaSuccess"></div>
         <ul class="contact-list hidden" id="contactList">
             <li>
-                <span>V:</span> <a class="phone" data-encoded="KzkyNTgyODM0OTE1"></a> <a class="whatsapp" data-encoded="KzkyNTgyODM0OTE1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+                <span>V:</span> <a class="phone" data-encoded="Kzk3MjUyODM0OTE5NQ=="></a> <a class="whatsapp" data-encoded="Kzk3MjUyODM0OTE5NQ=="><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
             <li>
-                <span>A:</span> <a class="phone" data-encoded="KzkyNTQ2OTU1MTEy"></a> <a class="whatsapp" data-encoded="KzkyNTQ2OTU1MTEy"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+                <span>A:</span> <a class="phone" data-encoded="Kzk3MjU0Njk1NTExMg=="></a> <a class="whatsapp" data-encoded="Kzk3MjU0Njk1NTExMg=="><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
             <li>
-                <span>E:</span> <a class="phone" data-encoded="KzkyNTg3NzEzNDQ0"></a> <a class="whatsapp" data-encoded="KzkyNTg3NzEzNDQ0"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+                <span>N:</span> <a class="phone" data-encoded="Kzk3MjU0NTcwMTEzNQ=="></a> <a class="whatsapp" data-encoded="Kzk3MjU0NTcwMTEzNQ=="><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
             <li>
-                <span>N:</span> <a class="phone" data-encoded="KzkyNTQ1NzAxMTM1"></a> <a class="whatsapp" data-encoded="KzkyNTQ1NzAxMTM1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+                <span>E:</span> <a class="phone" data-encoded="Kzk3MjU4NzcxMzQ0NA=="></a> <a class="whatsapp" data-encoded="Kzk3MjU4NzcxMzQ0NA=="><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
         </ul>
     </div>
@@ -81,9 +81,9 @@
         function formatPhoneNumber(phoneNumber) {
             // Remove any non-numeric characters
             const cleaned = ('' + phoneNumber).replace(/\D/g, '');
-            const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+            const match = cleaned.match(/^(\+?\d{3})(\d{2})(\d{3})(\d{4})$/);
             if (match) {
-                return `(${match[1]}) ${match[2]}-${match[3]}`;
+                return `(${match[1]}) ${match[2]}-${match[3]}-${match[4]}`;
             }
             return phoneNumber;
         }
@@ -100,7 +100,7 @@
             });
             document.querySelectorAll('.whatsapp').forEach(function(element) {
                 const decodedPhone = decodeBase64(element.getAttribute('data-encoded'));
-                element.setAttribute('href', 'https://wa.me/' + decodedPhone);
+                element.setAttribute('href', 'https://wa.me/' + decodedPhone.replace(/\D/g, ''));
             });
         }
     </script>
