@@ -18,10 +18,6 @@
             margin: 0 auto;
             padding: 10px;
         }
-        .ascii-art {
-            font-size: 0.8em;
-            line-height: 0.9em;
-        }
         .contact-list {
             list-style-type: none;
             padding: 0;
@@ -31,18 +27,22 @@
             margin: 10px 0;
             font-size: 1.2em;
             word-wrap: break-word;
+            display: flex;
+            align-items: center;
         }
         .contact-list a {
             color: #0f0;
             text-decoration: none;
         }
+        .contact-list img {
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+        }
         .hidden {
             display: none;
         }
         @media (max-width: 600px) {
-            .ascii-art {
-                font-size: 0.7em;
-            }
             .contact-list li {
                 font-size: 1em;
             }
@@ -56,54 +56,16 @@
         <div id="recaptcha-container" class="g-recaptcha" data-sitekey="6LevUPkpAAAAAMbG_S-cm33QvA96ZjqtO16E2Abb" data-callback="onRecaptchaSuccess"></div>
         <ul class="contact-list hidden" id="contactList">
             <li>
-                <div class="ascii-art">
-                    <pre>
-\ \    / /
- \ \  / / 
-  \ \/ /  
-   \  /   
-    \/    
-                    </pre>
-                </div>
-                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTUyODM0OTE5NQ=="></a>
+                <span>V:</span> <a class="phone" data-encoded="KzkyNTgyODM0OTE1"></a> <a class="whatsapp" data-encoded="KzkyNTgyODM0OTE1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
             <li>
-                <div class="ascii-art">
-                    <pre>
-     _    
-    / \   
-   / _ \  
-  / ___ \ 
- /_/   \_\
-                    </pre>
-                </div>
-                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTU0Njk1NTExMg=="></a>
+                <span>A:</span> <a class="phone" data-encoded="KzkyNTQ2OTU1MTEy"></a> <a class="whatsapp" data-encoded="KzkyNTQ2OTU1MTEy"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
             <li>
-                <div class="ascii-art">
-                    <pre>
- ______ 
-|  ____|
-| |__   
-|  __|  
-| |____ 
-|______|
-                    </pre>
-                </div>
-                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTU0NTcwLTExMzU="></a>
+                <span>E:</span> <a class="phone" data-encoded="KzkyNTQ1NzAxMTM1"></a> <a class="whatsapp" data-encoded="KzkyNTQ1NzAxMTM1"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
             <li>
-                <div class="ascii-art">
-                    <pre>
- _____ 
-| ____|
-| |__  
-|___ \ 
- ___) |
-|____/ 
-                    </pre>
-                </div>
-                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTU4NzcxMzQ0NA=="></a>
+                <span>N:</span> <a class="phone" data-encoded="KzkyNTg3NzEzNDQ0"></a> <a class="whatsapp" data-encoded="KzkyNTg3NzEzNDQ0"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
             </li>
         </ul>
     </div>
@@ -115,14 +77,30 @@
             }).join(''));
         }
 
+        // Function to format phone numbers
+        function formatPhoneNumber(phoneNumber) {
+            // Remove any non-numeric characters
+            const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+            const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+            if (match) {
+                return `(${match[1]}) ${match[2]}-${match[3]}`;
+            }
+            return phoneNumber;
+        }
+
         // Function to handle reCAPTCHA success
         function onRecaptchaSuccess() {
             document.getElementById('recaptcha-container').classList.add('hidden');
             document.getElementById('contactList').classList.remove('hidden');
             document.querySelectorAll('.phone').forEach(function(element) {
                 const decodedPhone = decodeBase64(element.getAttribute('data-encoded'));
-                element.textContent = decodedPhone;
+                const formattedPhone = formatPhoneNumber(decodedPhone);
+                element.textContent = formattedPhone;
                 element.setAttribute('href', 'tel:' + decodedPhone);
+            });
+            document.querySelectorAll('.whatsapp').forEach(function(element) {
+                const decodedPhone = decodeBase64(element.getAttribute('data-encoded'));
+                element.setAttribute('href', 'https://wa.me/' + decodedPhone);
             });
         }
     </script>
