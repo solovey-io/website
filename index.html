@@ -14,6 +14,9 @@
         }
         .container {
             text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10px;
         }
         .ascii-art {
             font-size: 0.8em;
@@ -27,19 +30,30 @@
         .contact-list li {
             margin: 10px 0;
             font-size: 1.2em;
+            word-wrap: break-word;
         }
-        .contact-list span {
-            font-weight: bold;
+        .contact-list a {
+            color: #0f0;
+            text-decoration: none;
         }
         .hidden {
             display: none;
         }
+        @media (max-width: 600px) {
+            .ascii-art {
+                font-size: 0.7em;
+            }
+            .contact-list li {
+                font-size: 1em;
+            }
+        }
     </style>
+    <meta name="robots" content="noindex, nofollow">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="container">
-        <div class="g-recaptcha" data-sitekey="6LevUPkpAAAAAMbG_S-cm33QvA96ZjqtO16E2Abb" data-callback="onRecaptchaSuccess"></div>
+        <div id="recaptcha-container" class="g-recaptcha" data-sitekey="6LevUPkpAAAAAMbG_S-cm33QvA96ZjqtO16E2Abb" data-callback="onRecaptchaSuccess"></div>
         <ul class="contact-list hidden" id="contactList">
             <li>
                 <div class="ascii-art">
@@ -51,7 +65,7 @@
     \/    
                     </pre>
                 </div>
-                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTUyODM0OTE5NQ=="></span>
+                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTUyODM0OTE5NQ=="></a>
             </li>
             <li>
                 <div class="ascii-art">
@@ -63,7 +77,7 @@
  /_/   \_\
                     </pre>
                 </div>
-                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTU0Njk1NTExMg=="></span>
+                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTU0Njk1NTExMg=="></a>
             </li>
             <li>
                 <div class="ascii-art">
@@ -76,7 +90,7 @@
 |______|
                     </pre>
                 </div>
-                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTU0NTcwLTExMzU="></span>
+                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTU0NTcwLTExMzU="></a>
             </li>
             <li>
                 <div class="ascii-art">
@@ -89,7 +103,7 @@
 |____/ 
                     </pre>
                 </div>
-                <span>Phone:</span> <span class="phone" data-encoded="OTcyLTU4NzcxMzQ0NA=="></span>
+                <span>Phone:</span> <a class="phone" data-encoded="OTcyLTU4NzcxMzQ0NA=="></a>
             </li>
         </ul>
     </div>
@@ -103,9 +117,12 @@
 
         // Function to handle reCAPTCHA success
         function onRecaptchaSuccess() {
+            document.getElementById('recaptcha-container').classList.add('hidden');
             document.getElementById('contactList').classList.remove('hidden');
             document.querySelectorAll('.phone').forEach(function(element) {
-                element.textContent = decodeBase64(element.getAttribute('data-encoded'));
+                const decodedPhone = decodeBase64(element.getAttribute('data-encoded'));
+                element.textContent = decodedPhone;
+                element.setAttribute('href', 'tel:' + decodedPhone);
             });
         }
     </script>
